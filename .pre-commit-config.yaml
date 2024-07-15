@@ -1,0 +1,25 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: "v2.5.0"
+  hooks:
+    - id: trailing-whitespace
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    - id: check-added-large-files
+    - id: no-commit-to-branch
+      args: ['--branch', 'main']
+- repo: local
+  hooks:
+
+    - id: black
+      name: black
+      entry: black
+      language: system
+      types: [python]
+      exclude: migrations|settings.py
+      args: ["--line-length=79"]
+
+        # It is recommended to specify the latest version of Python
+        # supported by your project here, or alternatively use
+        # pre-commit's default_language_version, see
+        # https://pre-commit.com/#top_level-default_language_version

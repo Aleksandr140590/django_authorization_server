@@ -1,0 +1,5 @@
+.idea/
+.venv/
+
+infra-dev/back-dev/
+infra-dev/prod/

@@ -1,0 +1,48 @@
+version: '3.3'
+
+
+services:
+
+  # Authorization server
+  auth:
+    container_name: user-auth
+    image: auth-server:last
+    restart: always
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "chmod +x /app/infra/docker-entrypoint.sh && /app/infra/docker-entrypoint.sh"
+    volumes:
+      - static:/app/static/
+      - media:/app/media/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+# Postgres DB
+  db:
+    image: postgres
+    container_name: user-db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+
+  nginx:
+    image: nginx:1.19.3
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - auth
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/var/html/static/
+      - media:/var/html/media/
+
+volumes:
+  static:
+  media:
+  postgres_data:
