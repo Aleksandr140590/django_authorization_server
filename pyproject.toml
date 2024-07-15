@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "django-authorization-server"
+version = "0.1.0"
+description = "Сервер авторизации и аутентификации"
+authors = ["Alexandr Fedorovich <alex2717@yandex.kz>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "4.2.7"
+djoser = "^2.2.3"
+psycopg2-binary = "^2.9.9"
+python-environ = "^0.4.54"
+pre-commit = "^3.7.1"
+black = "^24.4.2"
+gunicorn = "^22.0.0"
+taskipy = "^1.13.0"
+drf-yasg = "^1.21.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+start = "gunicorn config.wsgi:application --bind"
+migrate = "python manage.py migrate"
+createsuperuser = "python manage.py createsuperuser"
+collectstatic = "python manage.py collectstatic --no-input"
